@@ -2,7 +2,7 @@ from importlib import reload
 from PySide2 import QtWidgets
 from maya import cmds
 from . import function
-from . import web_ui
+from . import web_ui as wui
 
 reload(web_ui)
 reload(function)
@@ -16,7 +16,7 @@ class MainWindow(QtWidgets.QMainWindow):
         v_box = QtWidgets.QVBoxLayout()
         h_box = QtWidgets.QHBoxLayout()
 
-        self.web_ui = web_ui.WebUI()
+        web_ui = wui.WebUI()
 
         self.input_label = QtWidgets.QLabel('URL:')
         self.input_text = QtWidgets.QLineEdit()
@@ -29,7 +29,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # connection
         get_url_button.clicked.connect(
-            lambda: self.input_text.setText(self.web_ui.get_url())
+            lambda: self.input_text.setText(web_ui.get_url())
         )
         download_button.clicked.connect(
             lambda: [
@@ -55,7 +55,7 @@ class MainWindow(QtWidgets.QMainWindow):
         h_box.addWidget(get_url_button)
 
         # vbox
-        v_box.addWidget(self.web_ui)
+        v_box.addWidget(web_ui)
         v_box.addLayout(h_box)
         v_box.addWidget(download_button)
         v_box.addWidget(image_plane_button)
